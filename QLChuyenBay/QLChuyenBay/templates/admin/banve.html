@@ -1,0 +1,74 @@
+{% extends 'admin/master.html' %}
+
+{% block body %}
+<h2 class="text-center text-info">BÁN VÉ</h2>
+{% if err_msg %}
+<div class="alert alert-danger">
+  {{ err_msg }}
+</div>
+{% endif %}
+<div class="contanier">
+  <div class="row">
+    <div class="col">
+      <form>
+        <div class="form-group">
+        <label for="chuyenbay_name">Tên chuyến bay:</label>
+        <input type="text" name="chuyenbay_name" class="form-control" id="chuyenbay_name">
+      </div>
+      <div class="form-group">
+        <label for="timebay">Thời gian bay:</label>
+        <input type="time" name="timebay" class="form-control" id="timebay">
+      </div>
+      <button type="submit" class="btn btn-info">Tìm</button>
+    </form>
+    </div>
+    <div class="col">
+      <div class="container mt-5 mb-5 ">
+        <div class="d-flex justify-content-center row">
+          <div class="col-md-10">
+            {% for cb in chuyenbays %}
+            <div class="card shadow" style="margin-bottom: 10px;">
+              <div class="card-header">
+                <div class="row">
+                  <div class="col-md-4 font-weight-bolder">{{ cb.name }}</div>
+                  <div class="col">
+                    {{ cb.thoi_gian_bay.strftime('%Hhrs %Mmins bay') }}
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-4">Khởi hành: </div>
+                  <div class="col">{{ cb.ngay_gio.strftime('%H:%M %a, %b %d, %Y')}}</div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<form method="post">
+  <div class="form-group">
+    <label for="cbname">Tên chuyến bay:</label>
+    <input type="text" name="cbname" class="form-control" id="cbname">
+  </div>
+
+  <div class="form-group">
+    <label for="hangve">Hạng vé (1,2):</label>
+    <input type="number" name="hangve" class="form-control" id="hangve" value="1">
+  </div>
+
+  <div class="form-group">
+    <label for="soluong">Số lượng</label>
+    <input type="number" name="soluong" class="form-control" id="soluong">
+  </div>
+
+  <button type="submit" class="btn btn-info">Xác nhận</button>
+</form>
+<br>
+
+{% endblock %}

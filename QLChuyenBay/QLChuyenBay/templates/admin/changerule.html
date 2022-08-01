@@ -1,0 +1,57 @@
+{% extends 'admin/master.html' %}
+
+{% block body %}
+<h2 class="text-center text-info">THAY ĐỔI QUY ĐỊNH</h2>
+<div class="container">
+    {% if err_msg %}
+    <div class="alert alert-danger">
+        {{ err_msg }}
+    </div>
+    {% endif %}
+
+    <form method="post">
+        <div class="form-group">
+            <label for="slsanbay">Số lượng sân bay:</label>
+            <input type="number" name="slsanbay" class="form-control" id="slsanbay" required>
+        </div>
+
+        <div class="form-group">
+            <label for="slhangve">Số lượng hạng vé:</label>
+            <input type="number" name="slhangve" class="form-control" id="slhangve" required>
+        </div>
+
+        <div class="form-group">
+            <label for="sanbaytrunggianmax">Số lượng sân bay trung gian tối đa:</label>
+            <input type="number" name="sanbaytrunggianmax" class="form-control" id="sanbaytrunggianmax" required>
+        </div>
+
+        <div class="form-group">
+            <label for="timebaymin">Thời gian bay tối thiểu:</label>
+            <input type="time" name="timebaymin" class="form-control" id="timebaymin" required>
+        </div>
+
+        <div class="form-group">
+            <label for="timedungmin">Thời gian dừng tối thiểu:</label>
+            <input type="time" name="timedungmin" class="form-control" id="timedungmin" required>
+        </div>
+
+        <div class="form-group">
+            <label for="timedungmax">Thời gian dừng tối đa:</label>
+            <input type="time" name="timedungmax" class="form-control" id="timedungmax" required>
+        </div>
+
+        <div class="form-group">
+            <label for="timebanve">Thời gian bán vé:</label>
+            <input type="time" name="timebanve" class="form-control" id="timebanve" required>
+        </div>
+
+        <div class="form-group">
+            <label for="timedatve">Thời gian đặt vé:</label>
+            <input type="time" name="timedatve" class="form-control" id="timedatve" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Lưu quy định</button>
+    </form>
+    <br>
+</div>
+{% endblock %}

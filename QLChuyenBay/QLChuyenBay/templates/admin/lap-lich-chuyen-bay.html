@@ -1,0 +1,71 @@
+{% extends 'admin/master.html' %}
+
+{% block body %}
+<h2 class="text-center text-info">LẬP LỊCH CHUYẾN BAY</h2>
+<div class="container">
+  {% if err_msg %}
+  <div class="alert alert-danger">
+    {{ err_msg }}
+  </div>
+  {% endif %}
+
+  <form method="post">
+    <div class="form-group">
+      <label for="chuyenbayname">Tên chuyến bay:</label>
+      <input type="text" name="chuyenbayname" class="form-control" id="chuyenbayname" required>
+    </div>
+
+    <div class="form-group">
+      <label for="matuyenbay">Mã tuyến bay:</label>
+      <select class="form-control" name='matuyenbay' id="matuyenbay" required>
+        {% for tb in tuyen_bays %}
+        <option value="{{ tb.id }}">{{ tb.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="ngaygio">Ngày giờ:</label>
+      <input class="form-control" type="datetime-local" id="ngaygio" name="ngaygio" required>
+    </div>
+
+    <div class="form-group">
+      <label for="thoigianbay">Thời gian bay:</label>
+      <input type="time" name="thoigianbay" class="form-control" id="thoigianbay" required>
+    </div>
+
+    <div class="form-group">
+      <label for="slghehang1">Số lượng ghế hạng 1:</label>
+      <input type="number" name="slghehang1" class="form-control" id="slghehang1" required>
+    </div>
+
+    <div class="form-group">
+      <label for="slghehang2">Số lượng ghế hạng 2:</label>
+      <input type="number" name="slghehang2" class="form-control" id="slghehang2" required>
+    </div>
+
+    <div class="form-group">
+      <label for="sanbaytrunggian">Sân bay trung gian </label>
+      <select class="form-control" name='sanbaytrunggian' id="sanbaytrunggian">
+        <option></option>
+        {% for s in san_bays %}
+        <option value="{{ s.id }}">{{ s.ten_thanh_pho }} ({{ s.ma_san_bay }})</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="thoigiandung">Thời gian dừng:</label>
+      <input type="time" name="thoigiandung" class="form-control" id="thoigiandung">
+    </div>
+
+    <div class="form-group">
+      <label for="ghichu">Ghi chú:</label>
+      <input type="text" name="ghichu" class="form-control" id="ghichu">
+    </div>
+
+    <button type="submit" class="btn btn-info">Lưu lịch chuyến bay</button>
+  </form>
+  <br>
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}Đăng nhập Triple T Club{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center py-2 my-3">ĐĂNG NHẬP NGƯỜI DÙNG</h2>
+
+    {% if err_msg %}
+    <div class="alert alert-danger">
+        {{ err_msg }}
+    </div>
+    {% endif %}
+
+    <form method="post">
+        <div class="form-group">
+            <label for="username">Tên người dùng</label>
+            <input type="text" class="form-control" id="username" name="username" required />
+        </div>
+        <div class="form-group">
+            <label for="pass">Mật khẩu</label>
+            <input type="password" class="form-control" id="pass" name="password" required />
+        </div>
+        <input type="submit" value="Đăng nhập" class="btn btn-outline-secondary"/>
+    </form>
+</div>
+<br><br>
+{% endblock %}

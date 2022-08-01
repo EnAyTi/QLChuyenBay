@@ -1,0 +1,92 @@
+{% extends 'admin/master.html' %}
+
+{% block body %}
+<h2 class="text-center text-info">THỐNG KÊ BÁO CÁO</h2>
+<div class="row">
+    <div class="col-md-5 col-xs-12">
+        <table class="table">
+            <tr>
+                <th>Tháng</th>
+                <th>Tên tuyến</th>
+                <th>Doanh thu</th>
+            </tr>
+            {% for s in stats %}
+            <tr>
+                <td>{{ s[0] }}</td>
+                <td>{{ s[1] }}</td>
+                <td>
+                    {% if s[2] %}
+                    {{ "{:,.1f}".format(s[2]) }} VND
+                    {% else %}
+                    0 VND
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+
+    <div class="col-md-7 col-xs-12">
+        <form>
+            <div class="form-group">
+                <label for="year">Nhập năm</label>
+                <input type="number" name="year" id="year" class="form-control"/>
+            </div>
+            <input type="submit" value="Thống kê" class="btn btn-info"/>
+        </form>
+        <canvas id="myChart"></canvas>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    let labels = [], data = []
+    let name = 'Thống kê doanh thu của tuyến bay theo tháng'
+    {% for s in stats %}
+        {% if s[2] %}
+            labels.push('{{ s[1] }}')
+            data.push({{ s[2] }})
+        {% endif %}
+    {% endfor %}
+
+    window.onload = function() {
+        let ctx = document.getElementById('myChart').getContext('2d');
+        loadChart(name, ctx, labels, data, 'bar')
+    }
+
+    function loadChart(name, ctx, label, data, type) {
+        let colors = [], borderColors=[]
+        let r, g, b
+        for (let i = 0; i < labels.length; i++) {
+            r = parseInt(Math.random()*255)
+            g = parseInt(Math.random()*255)
+            b = parseInt(Math.random()*255)
+            colors.push(`rgba(${r}, ${g}, ${b}, 0.5)`)
+            borderColors.push(`rgba(${r}, ${g}, ${b}, 1)`)
+        }
+
+        const myChart = new Chart(ctx, {
+            type: type,
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: name,
+                    data: data,
+                    backgroundColor: colors,
+                    borderColor: borderColors,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+</script>
+{% endblock %}

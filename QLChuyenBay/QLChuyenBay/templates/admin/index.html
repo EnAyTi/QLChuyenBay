@@ -1,0 +1,87 @@
+{% extends 'admin/master.html' %}
+
+{% block body %}
+
+{% if current_user.is_authenticated %}
+<div class="row">
+  <div class="col-md-5 col-xs-12">
+    <table class="table">
+      <tr>
+        <th>Mã tuyến bay</th>
+        <th>Tên tuyến</th>
+        <th>Số lượng</th>
+      </tr>
+      {% for s in stats %}
+      <tr>
+        <td>{{ s[0] }}</td>
+        <td>{{ s[1] }}</td>
+        <td>{{ s[2] }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+
+  <div class="col-md-7 col-xs-12">
+    <canvas id="myTuyenBayChart" width="400" height="400"></canvas>
+  </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  let labels = [], counter = [], colors = [], borderColors = []
+  {% for s in stats %}
+    labels.push('{{ s[1] }}')
+    counter.push({{ s[2] }})
+
+    r = parseInt(Math.random()*255)
+    g = parseInt(Math.random()*255)
+    b = parseInt(Math.random()*255)
+    colors.push(`rgba(${r}, ${g}, ${b}, 0.5)`)
+    borderColors.push(`rgba(${r}, {g}, ${b}, 1)`)
+  {% endfor %}
+
+  window.onload = function() {
+    const ctx = document.getElementById('myTuyenBayChart').getContext('2d');
+    const myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Thống kê số chuyến bay theo tuyến bay',
+                data: counter,
+                backgroundColor: colors,
+                borderColor: borderColors,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+  }
+</script>
+
+{% else %}
+<h1 class="text-info text-center">ĐĂNG NHẬP QUẢN TRỊ</h1>
+<form method="post" action="{{ url_for('admin_login') }}">
+  <div class="form-group">
+    <label for="username">Username:</label>
+    <input type="text" class="form-control"
+           name="username"
+           placeholder="Nhập username" id="username">
+  </div>
+  <div class="form-group">
+    <label for="pwd">Password:</label>
+    <input type="password" class="form-control"
+           name="password"
+           placeholder="Nhập password" id="pwd">
+  </div>
+  <button type="submit" class="btn btn-primary">Đăng nhập</button>
+</form>
+{% endif %}
+{% endblock %}

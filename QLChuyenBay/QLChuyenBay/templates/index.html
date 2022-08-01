@@ -1,0 +1,197 @@
+{% extends 'layout/base.html' %}
+
+{% block title %} Triple T Airlines | Fly your dreams {% endblock %}
+
+{% block content %}
+<div id="carouselExampleCaptions" class="carousel slide carousel-fade" data-ride="carousel">
+
+    <ol class="carousel-indicators">
+        <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
+        <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
+    </ol>
+
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="{{ url_for('static', filename='images/banner-bg.png') }}" class="d-block w-100" alt="banner1">
+            <div class="carousel-caption d-none d-md-block">
+                <h3> Tiết kiệm hơn, bay nhiều hơn.</h3>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="{{ url_for('static', filename='images/banner.jpg') }}" class="d-block w-100" alt="banner2">
+            <div class="carousel-caption d-none d-md-block">
+                <h3>Chúng tôi đã áp dụng các biện pháp chăm sóc sức khoẻ tại sân bay và trên máy bay để giúp quý khách an tâm khi đi du lịch</h3>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="{{ url_for('static', filename='images/banner2.png') }}" class="d-block w-100" alt="banner3">
+            <div class="carousel-caption d-none d-md-block">
+                <h3>Cập nhật ngay lịch bay quốc tế thường lệ mới nhất</h3>
+            </div>
+        </div>
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-target="#carouselExampleCaptions" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-target="#carouselExampleCaptions" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </button>
+</div>
+<div class="container-fluid shadow-sm bg-light">
+    <div class="container mb-5 bg-light rounded" style="padding: 2rem">
+        <h2 class="text-center py-2 section-heading" style="margin-bottom: 1.5rem">TÌM CHUYẾN BAY</h2>
+        <form method="get" action="{{ url_for('result') }}">
+            <div class="row justify-content-center">
+                <div class="col-sm-6 col-lg-3">
+                    <label for="diemdi" style="margin-right: 15px">Điểm đi</label>
+                    <select class="select2 custom-seclect" style="width: 100%" name='diemdi' id="diemdi" required>
+                        <option></option>
+                        {% for s in san_bays %}
+                        <option value="{{ s.id }}">{{ s.ten_thanh_pho }} ({{ s.ma_san_bay }})</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <label for="diemden">Điểm đến</label>
+                    <select class="select2 custom-seclect" style="width: 100%" name='diemden' id="diemden" required>
+                        <option></option>
+                        {% for s in san_bays %}
+                        <option value="{{ s.id }}">{{ s.ten_thanh_pho }} ({{ s.ma_san_bay }})</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <label for="khoihanh" style="margin-right: 305px">Ngày</label>
+                    <input class="timepicker" type="text" id="khoihanh" name="khoihanh" required />
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                     <button type="submit" id="submittim" class="btn btn-primary" style="margin-top: 22px">
+                        Tìm chuyến bay
+                     </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<section class="services">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="service-item first-service">
+                    <div class="service-icon"></div>
+                    <h4>Chăm sóc khách hàng 24/7</h4>
+                    <p>Chat là có, gọi là nghe, không quản đêm hôm, ngày nghỉ và ngày lễ.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="service-item second-service">
+                    <div class="service-icon"></div>
+                    <h4>Thanh toán dễ dàng, đa dạng</h4>
+                    <p>Bao gồm thêm chuyển khoản ngân hàng và tiền mặt tại cửa hàng.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="service-item third-service">
+                    <div class="service-icon"></div>
+                    <h4>Săn vé giá tốt nội địa, quốc tế</h4>
+                    <p>So sánh giá tốt nhất từ các hãng hàng không nội địa đường bay quốc tế.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="pt-5 pb-5">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-6">
+                <h3 class="mb-3">Địa điểm hấp dẫn</h3>
+            </div>
+
+            <div class="col-6 text-right">
+                <a class="btn btn-secondary btn-sm mb-3 mr-1" href="#carouselExampleIndicators2" role="button" data-slide="prev">
+                    <i class="fa fa-arrow-left"></i>
+                </a>
+                <a class="btn btn-secondary btn-sm mb-3 " href="#carouselExampleIndicators2" role="button" data-slide="next">
+                    <i class="fa fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <div class="col-12">
+                <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="row">
+
+                                <div class="col-md-4 mb-3">
+                                    <div class="card">
+                                        <img class="img-fluid" alt="Phú Quốc" src="{{ url_for('static', filename='images/phu-quoc.jpg') }}">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Phú Quốc</h4>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <div class="card">
+                                        <img class="img-fluid" alt="Cao Bằng" src="{{ url_for('static', filename='images/cao-bang.jpg') }}">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Cao Bằng</h4>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <div class="card">
+                                        <img class="img-fluid" alt="Đà Nẵng" src="{{ url_for('static', filename='images/da-nang.jpg') }}">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Đà Nẵng</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row">
+
+                                <div class="col-md-4 mb-3">
+                                    <div class="card">
+                                        <img class="img-fluid" alt="Đà Lạt" src="{{ url_for('static', filename='images/da-lat.jpg') }}">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Đà Lạt</h4>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <div class="card">
+                                        <img class="img-fluid" alt="TP Hồ Chí Minh" src="{{ url_for('static', filename='images/tp-hcm.jpg') }}">
+                                        <div class="card-body">
+                                            <h4 class="card-title">TP Hồ Chí Minh</h4>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <div class="card">
+                                        <img class="img-fluid" alt="Nha Trang" src="{{ url_for('static', filename='images/nha-trang.png') }}">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Nha Trang</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

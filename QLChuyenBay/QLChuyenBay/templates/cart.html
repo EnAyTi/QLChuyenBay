@@ -1,0 +1,49 @@
+{% extends 'layout/base.html' %}
+
+{% block title %} Triple T Airlines {% endblock %}
+
+{% block content %}
+<div class="container" style="w">
+    <h2 class="text-center py-2 my-3">THANH TOÁN</h2>
+
+    {% if 'cart' in session and session['cart'] %}
+    <table class="table">
+        <tr>
+            <th>Mã vé</th>
+            <th>Mã chuyến bay</th>
+            <th>Giá</th>
+            <th>Số lượng</th>
+        </tr>
+        {% for c in session['cart'].values() %}
+        <tr id="ve{{ c.mave }}">
+            <td>{{ c.mave }}</td>
+            <td>{{ c.machuyenbay }}</td>
+            <td>{{ c.gia }}</td>
+            <td>{{ c.quantity }}</td>
+            <td> <input type="button" value="Xoa" onclick="deleteCart({{ c.mave }})" class="btn btn-danger"/> </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <div class="alert alert-info">
+        <h5>Tổng vé: <span class="cart-info">{{ cart_stats.total_quantity }}</span></h5>
+        <h5>Tổng tiền: <span id="amountId">{{ "{:,.1f}".format(cart_stats.total_amount) }}</span> VND</h5>
+    </div>
+
+    {% if current_user.is_authenticated %}
+    <div>
+        <input type="button" value="Thanh toán" onclick="pay()" class="btn btn-secondary"/>
+    </div>
+    <br><br>
+    {% else %}
+    <div style="margin-bottom: 10px">
+        <a href="{{ url_for('signin', next='cart') }}">Dang nhap de thanh toan!!!</a>
+    </div>
+    {% endif %}
+
+    {% else %}
+    <i><a class="text-center" href="{{ url_for('home') }}">Tìm chuyến bay</a></i>
+    <p><i>Bạn chưa đặt mua vé</i></p>
+    {% endif %}
+</div>
+{% endblock %}
